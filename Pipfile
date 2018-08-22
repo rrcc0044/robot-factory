@@ -12,6 +12,8 @@ gunicorn = "*"
 newrelic = "*"
 "psycopg2-binary" = "*"
 djangorestframework = "*"
+mixer = "*"
+pytest-django = "*"
 
 [dev-packages]
 "flake8" = "*"
