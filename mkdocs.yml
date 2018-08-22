@@ -1,0 +1,9 @@
+site_name: robot_factory
+site_description: Quality Assurance for Robots
+repo_url: https://github.com/rrcc0044/toy-robot
+site_dir: site
+copyright: Copyright &copy; 2018, <a href="https://github.com/rrcc0044">Renz Calangi</a>.
+dev_addr: 0.0.0.0:8001
+
+pages:
+  - Home: 'index.md'
