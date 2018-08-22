@@ -1,4 +1,4 @@
 from mixer.backend.django import mixer
 
 
-robots = mixer.blend('robots.Robot')
+robot = mixer.blend('robots.Robot')

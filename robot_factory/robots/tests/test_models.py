@@ -1,8 +1,9 @@
+from mixer.backend.django import mixer
+
 from django.test import TestCase
 
-from robot_factory.robots.models import Robot
-
-from .factories import robots
+from .factories import robot
+from ..models import Robot
 
 
 def RobotModelTestCase(TestCase):
@@ -11,15 +12,19 @@ def RobotModelTestCase(TestCase):
     """
 
     def setUp(self):
-        self.robot = Robot()
+        self.robot = robot
     
     def test_model_can_create_a_robot(self):
-        robot = Robot()
-        old_count = Robot.objects.count()
-        robot.save()
-        new_count = Robot.objects.count()
+        robot = mixer.blend('robot.Robot')
+        self.assertTrue(robot.pk is not None)
 
-        self.assertNotEqual(old_count, new_count)
+    def test_model_string_returns_robot_name(self):
+        self.assertEqual(str(self.robot), self.robot.name)
 
-    def test_model_cant_update_with_illegal_value(self):
-        self.fail("TODO Test incomplete")
+    def test_model_is_recyclable_property(self):
+        robot = mixer.blend(
+            'robot.Robot',
+            categories={'hasWheels': True, 'hasTracks': True}
+        )
+        
+        self.assertTrue(robot.is_recyclable)
