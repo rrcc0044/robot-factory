@@ -44,12 +44,11 @@ class Robot(models.Model):
 
     def save(self, *args, **kwargs):
         required_configuration = set(_default_configuration_fields())
-        print(self.configuration)
-        print(required_configuration)
+
         if not set(self.configuration).issubset(required_configuration):
             raise ValueError('configuration not allowed')
 
-        if not any(self.qa_status in code for code in self.QA_STATUS):
+        if qa_status is not None and not any(self.qa_status in code for code in self.QA_STATUS):
             raise ValueError('qa_status not allowed')
 
         super().save(*args, **kwargs)
