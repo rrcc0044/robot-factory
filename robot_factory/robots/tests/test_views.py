@@ -5,17 +5,16 @@ from rest_framework.views import reverse_action
 from rest_framework.test import APITestCase
 from rest_framework import status
 
-from .factories import robot
 from ..models import Robot
 
 
-class TestRobotViewTestCase(APITestCase):
+class RobotViewTestCase(APITestCase):
     """
     Tests /users list operations.
     """
 
     def setUp(self):
-        self.robot = robot
+        self.robot = mixer.blend('robots.Robot')
 
     def test_get_request_returns_robot_list_for_qa(self):
         url = reverse('robot-list')
