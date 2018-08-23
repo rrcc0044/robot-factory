@@ -48,7 +48,9 @@ class Robot(models.Model):
         if not set(self.configuration).issubset(required_configuration):
             raise ValueError('configuration not allowed')
 
-        if qa_status is not None and not any(self.qa_status in code for code in self.QA_STATUS):
+        if self.qa_status is not None \
+            and not any(self.qa_status in code for code in self.QA_STATUS):
+
             raise ValueError('qa_status not allowed')
 
         super().save(*args, **kwargs)
