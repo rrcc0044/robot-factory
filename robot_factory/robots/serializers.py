@@ -3,7 +3,10 @@ from rest_framework import serializers
 from .models import Robot
 
 
-class RobotSerializer(serializers.ModelSerializer)
+class RobotSerializer(serializers.ModelSerializer):
+
+    status = serializers.StringRelatedField(many=True)
+
     class Meta:
         model = Robot
-        fields = '__all__'
+        fields = ('id', 'configuration', 'status')
