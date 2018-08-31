@@ -21,6 +21,12 @@ class Robot(models.Model):
     name = models.CharField(max_length=255)
     configuration = JSONField(default=_default_configuration_fields)
     qa_status = models.CharField(max_length=20, choices=QA_STATUS, null=True)
+    shipment = models.ForeignKey(
+        'shipments.Shipment',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
 
     @property
     def is_recyclable(self):
