@@ -1,11 +1,13 @@
-from mixer.backend.django import mixer
-
 from django.test import TestCase
+from mixer.backend.django import mixer
 
 from ..serializers import RobotSerializer
 
 
 class RobotSerializerTestCase(TestCase):
+    """
+    Defines the test suite to be run against the RobotSerializer
+    """
 
     def setUp(self):
         self.robot = mixer.blend('robots.Robot')

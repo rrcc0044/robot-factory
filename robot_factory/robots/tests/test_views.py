@@ -1,6 +1,5 @@
-from mixer.backend.django import mixer
-
 from django.urls import reverse
+from mixer.backend.django import mixer
 from rest_framework.views import reverse_action
 from rest_framework.test import APITestCase
 from rest_framework import status
@@ -10,7 +9,7 @@ from ..models import Robot
 
 class RobotViewTestCase(APITestCase):
     """
-    Tests /users list operations.
+    Tests user view operations
     """
 
     def setUp(self):

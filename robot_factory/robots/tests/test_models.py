@@ -1,8 +1,5 @@
-from mixer.backend.django import mixer
-
 from django.test import TestCase
-
-from ..models import Robot, Status
+from mixer.backend.django import mixer
 
 
 class RobotModelTestCase(TestCase):
