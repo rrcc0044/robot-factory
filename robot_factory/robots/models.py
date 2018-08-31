@@ -27,15 +27,22 @@ class Robot(models.Model):
         rotors = self.configuration['numberOfRotors']
         wheels = self.configuration['hasWheels']
         color = self.configuration['color']
+        is_sentient = self.configuration['hasSentience']
         tracks = self.configuration['hasTracks']
+        status = [obj.text for obj in self.status.all()]
 
         if rotors:
             if color == 'blue' or (rotors < 3 or rotors > 8):
                 return True
 
         if wheels:
-            if tracks:
+            if tracks or 'rusty' in status:
                 return True
+
+        if (is_sentient and 'loose screws' in status) or \
+            'on fire' in status:
+
+            return True
 
         return False
 
