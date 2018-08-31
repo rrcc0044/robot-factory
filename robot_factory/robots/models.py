@@ -40,8 +40,7 @@ class Robot(models.Model):
                 return True
 
         if (is_sentient and 'loose screws' in status) or \
-            'on fire' in status:
-
+           'on fire' in status:
             return True
 
         return False
@@ -56,7 +55,7 @@ class Robot(models.Model):
             raise ValueError('configuration not allowed')
 
         if self.qa_status is not None \
-            and not any(self.qa_status in code for code in self.QA_STATUS):
+           and not any(self.qa_status in code for code in self.QA_STATUS):
 
             raise ValueError('qa_status not allowed')
 

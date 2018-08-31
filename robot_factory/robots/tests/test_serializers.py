@@ -12,7 +12,7 @@ class RobotSerializerTestCase(TestCase):
     def setUp(self):
         self.robot = mixer.blend('robots.Robot')
         self.serializer = RobotSerializer(instance=self.robot)
-    
+
     def test_serializer_represent_object_properly(self):
         expected = {
             'id': self.robot.id,
