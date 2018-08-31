@@ -32,6 +32,7 @@ INSTALLED_APPS = [
 
     # apps
     'robot_factory.robots',
+    'robot_factory.shipments',
 ]
 
 MIDDLEWARE = [
