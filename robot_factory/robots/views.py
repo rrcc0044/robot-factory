@@ -35,12 +35,12 @@ class RobotView(mixins.ListModelMixin,
         # verify the robots are recyclable
         robots = self.queryset.filter(pk__in=ids)
         for robot in robots:
-            if not robots.is_recyclable:
+            if not robot.is_recyclable:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
 
         try:
             with transaction.atomic():
-                self.queryset.filter(pk__in=ids).delete()
+                robots.delete()
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
