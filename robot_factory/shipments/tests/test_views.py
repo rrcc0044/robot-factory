@@ -6,12 +6,14 @@ from rest_framework.test import APITestCase
 
 class ShipmentViewTestCase(APITestCase):
 
-    def setup(self):
-        status = (status for status in ('factory_seconds', 'passed_qa'))
-        self.robots = mixer.cycle(10).blend('robots.Robot', qa_status=status)
+    def setUp(self):
+        self.robots = mixer.cycle(10).blend(
+            'robots.Robot',
+            qa_status='passed_qa'
+        )
 
     def test_post_creates_shipment(self):
-        url = reverse('shipment-list')
+        url = reverse('shipment-create')
 
         body = {
             'shipRobots': [robot.id for robot in self.robots]
