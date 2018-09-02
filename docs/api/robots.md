@@ -10,7 +10,7 @@ $ docker exec <container> python3 manage.py dump_robots --count=<int|10>
 
 **Request**:
 
-`GET` `/robots`
+`GET` `/api/v1/robots`
 
 **Parameters:**
 
@@ -49,7 +49,7 @@ Removes the `on fire` status if the robot is `on fire` and `has Sentience`
 
 **Request**:
 
-`PUT` `/robots/:id/extinguish`
+`PUT` `/api/v1/robots/:id/extinguish`
 
 
 **Response**:
@@ -64,7 +64,7 @@ Content-Type application/json
 
 **Request**:
 
-`DELETE` `/robots/recycle`
+`DELETE` `/api/v1/robots/recycle`
 
 **Parameters:**
 
