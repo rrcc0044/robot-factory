@@ -71,7 +71,7 @@ class Robot(models.Model):
 
 
 class Status(models.Model):
-    robots = models.ManyToManyField(Robot, related_name='status')
+    robots = models.ManyToManyField(Robot, related_name='status', blank=True)
     text = models.CharField(max_length=50)
 
     def __str__(self):
