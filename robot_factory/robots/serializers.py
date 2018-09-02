@@ -9,4 +9,7 @@ class RobotSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Robot
-        fields = ('id', 'name', 'configuration', 'status', 'qa_status')
+        fields = (
+            'id', 'name', 'configuration', 'status', 'qa_status',
+            'is_recyclable'
+        )
