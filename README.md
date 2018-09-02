@@ -9,3 +9,4 @@ $ cd robot-factory
 $ docker-compose build
 $ docker-compose up
 ```
+##### Docs are available at http://localhost:8001 after running the container

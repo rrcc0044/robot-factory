@@ -7,3 +7,6 @@ dev_addr: 0.0.0.0:8001
 
 pages:
   - Home: 'index.md'
+  - API:
+    - Robots: 'api/robots.md'
+    - Shipments: 'api/shipments.md'

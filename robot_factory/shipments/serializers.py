@@ -15,6 +15,8 @@ class CreateShipmentSerializer(serializers.ModelSerializer):
         for robot in data.get('shipRobots'):
             if not robot.qa_status:
                 raise serializers.ValidationError('not ready for Shipment')
+            if robot.shipment:
+                raise serializers.ValidationError('robot already shipped')
 
         return data
 

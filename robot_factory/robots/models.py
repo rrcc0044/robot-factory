@@ -20,7 +20,9 @@ class Robot(models.Model):
 
     name = models.CharField(max_length=255)
     configuration = JSONField(default=_default_configuration_fields)
-    qa_status = models.CharField(max_length=20, choices=QA_STATUS, null=True)
+    qa_status = models.CharField(
+        max_length=20, choices=QA_STATUS, null=True, blank=True
+    )
     shipment = models.ForeignKey(
         'shipments.Shipment',
         on_delete=models.CASCADE,

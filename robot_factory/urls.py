@@ -10,7 +10,7 @@ router.register('robots', RobotView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('shipments/create/', create_shipment, name='shipment-create')
+    path('shipments', create_shipment, name='shipment-create')
 ]
 
 urlpatterns += router.urls

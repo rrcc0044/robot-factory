@@ -1,4 +1,4 @@
-from django.db import transaction
+from django.db import transaction, IntegrityError
 from rest_framework import mixins, viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -11,6 +11,24 @@ class RobotView(mixins.ListModelMixin,
                 viewsets.GenericViewSet):
     queryset = Robot.objects.filter(qa_status=None)
     serializer_class = RobotSerializer
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned robots to a given request,
+        by filtering against a `qa_status` query parameter in the URL
+        if the action is list.
+        """
+
+        queryset = Robot.objects.all()
+
+        if self.action == 'list':
+            qa_status = self.request.query_params.get('qa_status', None)
+            if qa_status is not None:
+                if qa_status == 'all':
+                    return queryset.exclude(qa_status=None)
+                return queryset.filter(qa_status=qa_status)
+
+        return queryset.filter(qa_status=None)
 
     @action(methods=['put'], detail=True)
     def extinguish(self, request, pk):
@@ -55,13 +73,21 @@ class RobotView(mixins.ListModelMixin,
 
         # identify qa status for each robots
         robots = self.queryset.filter(pk__in=ids)
-        for robot in robots:
-            # check if the robot still has existing status
-            if robot.status.all():
-                robot.qa_status = 'factory_seconds'
-            else:
-                robot.qa_status = 'passed_qa'
+        try:
+            with transaction.atomic():
+                for robot in robots:
+                    if robot.is_recyclable:
+                        raise IntegrityError()
 
-            robot.save()
+                    # check if the robot still has existing status
+                    if robot.status.all():
+                        robot.qa_status = 'factory_seconds'
+                    else:
+                        robot.qa_status = 'passed_qa'
+
+                    robot.save()
+
+        except IntegrityError:
+            Response(status=status.HTTP_400_BAD_REQUEST)
 
         return Response(status=status.HTTP_200_OK)
