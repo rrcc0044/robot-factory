@@ -19,6 +19,30 @@ class RobotViewTestCase(APITestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+    def test_process_updates_robot_qa_status(self):
+        url = reverse('robot-list') + '/process'
+        robot = mixer.blend(
+            'robots.Robot',
+            configuration={
+                'hasSentience': False,
+                'hasWheels': False,
+                'hasTracks': False,
+                'numberOfRotors': 5,
+                'color': 'yellow',
+            },
+            qa_status=None
+        )
+
+        body = {
+            'processRobots': [robot.id]
+        }
+
+        response = self.client.post(url, body, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        robot = Robot.objects.get(id=robot.id)
+        self.assertTrue(robot.qa_status in ('passed_qa', 'factory_seconds'))
+
     def test_post_extinguish_updates_a_robot(self):
         robot = mixer.blend(
             'robots.Robot',
@@ -61,7 +85,7 @@ class RobotViewTestCase(APITestCase):
             'recycleRobots': [robot.id]
         }
 
-        response = self.client.delete(url, body, format='json')
+        response = self.client.post(url, body, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         with self.assertRaises(Robot.DoesNotExist):
