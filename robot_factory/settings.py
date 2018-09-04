@@ -14,7 +14,7 @@ SECRET_KEY = '36jmo0j+s)p5u9%$w@k#$cqze44$m%1x!8vi-c#%qg7v#!$@fg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -29,6 +29,7 @@ INSTALLED_APPS = [
 
     # Third party apps
     'rest_framework',  # utilities for rest apis
+    'corsheaders',
 
     # apps
     'robot_factory.robots',
@@ -115,3 +116,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CORS_ORIGIN_ALLOW_ALL = DEBUG
