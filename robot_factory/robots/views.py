@@ -9,26 +9,9 @@ from .serializers import RobotSerializer
 
 class RobotView(mixins.ListModelMixin,
                 viewsets.GenericViewSet):
-    queryset = Robot.objects.filter(qa_status=None)
+    queryset = Robot.objects.all()
     serializer_class = RobotSerializer
-
-    def get_queryset(self):
-        """
-        Optionally restricts the returned robots to a given request,
-        by filtering against a `qa_status` query parameter in the URL
-        if the action is list.
-        """
-
-        queryset = Robot.objects.all()
-
-        if self.action == 'list':
-            qa_status = self.request.query_params.get('qa_status', None)
-            if qa_status is not None:
-                if qa_status == 'all':
-                    return queryset.exclude(qa_status=None)
-                return queryset.filter(qa_status=qa_status)
-
-        return queryset.filter(qa_status=None)
+    authentication_classes= set()
 
     @action(methods=['put'], detail=True)
     def extinguish(self, request, pk):
@@ -39,11 +22,13 @@ class RobotView(mixins.ListModelMixin,
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
         on_fire_status = Status.objects.get(text='on fire')
-        robot = self.get_object().status.remove(on_fire_status)
+        robot = self.get_object()
+        robot.status.remove(on_fire_status)
+        serializer = self.serializer_class(robot)
 
-        return Response(status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-    @action(methods=['delete'], detail=False)
+    @action(methods=['post'], detail=False)
     def recycle(self, request):
         if 'recycleRobots' not in request.data:
             return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -64,7 +49,7 @@ class RobotView(mixins.ListModelMixin,
 
         return Response(status=status.HTTP_200_OK)
 
-    @action(methods=['put'], detail=False)
+    @action(methods=['post'], detail=False)
     def process(self, request):
         if 'processRobots' not in request.data:
             return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -90,4 +75,5 @@ class RobotView(mixins.ListModelMixin,
         except IntegrityError:
             Response(status=status.HTTP_400_BAD_REQUEST)
 
-        return Response(status=status.HTTP_200_OK)
+        serializer = self.serializer_class(robots, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
