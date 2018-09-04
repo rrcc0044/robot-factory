@@ -5,7 +5,7 @@ Supports creation of shipments.
 
 **Request**:
 
-`POST` `/shipments`
+`POST` `/api/v1/shipments`
 
 **Parameters:**
 
