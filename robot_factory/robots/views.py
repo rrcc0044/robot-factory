@@ -9,7 +9,7 @@ from .serializers import RobotSerializer
 
 class RobotView(mixins.ListModelMixin,
                 viewsets.GenericViewSet):
-    queryset = Robot.objects.all()
+    queryset = Robot.objects.filter(shipment=None)
     serializer_class = RobotSerializer
     authentication_classes= set()
 
