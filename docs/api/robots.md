@@ -12,11 +12,43 @@ $ docker exec <container> python3 manage.py dump_robots --count=<int|10>
 
 `GET` `/api/v1/robots`
 
+**Response**:
+
+```json
+Content-Type application/json
+200 OK
+
+[
+    {
+        "id": 1,
+        "name": "Cindy Garcia",
+        "configuration": {
+            "color": "blue",
+            "hasTracks": false,
+            "hasWheels": true,
+            "hasSentience": true,
+            "numberOfRotors": 11
+        },
+        "status": [
+            "on fire"
+        ],
+        "qa_status": null
+    }
+]
+```
+
+## Process Robots
+
+**Request**:
+
+`POST` `/api/v1/robots/process`
+
 **Parameters:**
 
 Name       | Type   | Description
 -----------|--------|---
-qa_status | string | Optional: possible values `qa_passed`, `factory_seconds`, `all`
+processRobots | list | The list of id of robots to be qa
+
 
 **Response**:
 
@@ -49,7 +81,7 @@ Removes the `on fire` status if the robot is `on fire` and `has Sentience`
 
 **Request**:
 
-`PUT` `/api/v1/robots/:id/extinguish`
+`POST` `/api/v1/robots/:id/extinguish`
 
 
 **Response**:
@@ -57,6 +89,20 @@ Removes the `on fire` status if the robot is `on fire` and `has Sentience`
 ```json
 Content-Type application/json
 200 OK
+
+{
+    "id": 1,
+    "name": "Cindy Garcia",
+    "configuration": {
+        "color": "blue",
+        "hasTracks": false,
+        "hasWheels": true,
+        "hasSentience": true,
+        "numberOfRotors": 11
+    },
+    "status": [],
+    "qa_status": null
+}
 ```
 
 
@@ -64,7 +110,7 @@ Content-Type application/json
 
 **Request**:
 
-`DELETE` `/api/v1/robots/recycle`
+`POST` `/api/v1/robots/recycle`
 
 **Parameters:**
 

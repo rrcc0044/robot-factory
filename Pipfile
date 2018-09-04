@@ -14,6 +14,7 @@ newrelic = "*"
 djangorestframework = "*"
 mixer = "*"
 pytest-django = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 "flake8" = "*"

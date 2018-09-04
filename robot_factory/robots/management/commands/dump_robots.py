@@ -20,11 +20,11 @@ class Command(BaseCommand):
             help='number of robots to be created',
         )
 
+
     def handle(self, *args, **options):
         status = [status for status in Status.objects.all()]
         self.robots = mixer.cycle(options['count']).blend(
-            'robots.Robot',
-            qa_status=mixer.RANDOM,
+            'robots.Robot'
         )
 
         # randomize configurations
