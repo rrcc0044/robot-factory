@@ -10,3 +10,9 @@ $ docker-compose build
 $ docker-compose up
 ```
 ##### Docs are available at http://localhost:8001 after running the container
+
+
+### Running Tests
+```bash
+$ docker exec <container_name> python3 manage.py test
+```
