@@ -20,6 +20,7 @@ class RobotSerializerTestCase(TestCase):
             'configuration': self.robot.configuration,
             'status': [status.text for status in self.robot.status.all()],
             'qa_status': self.robot.qa_status,
+            'is_recyclable': self.robot.is_recyclable,
         }
 
         self.assertEqual(self.serializer.data, expected)

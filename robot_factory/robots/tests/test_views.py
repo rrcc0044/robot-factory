@@ -61,7 +61,7 @@ class RobotViewTestCase(APITestCase):
             'recycleRobots': [robot.id]
         }
 
-        response = self.client.delete(url, body, format='json')
+        response = self.client.post(url, body, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         with self.assertRaises(Robot.DoesNotExist):
