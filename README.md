@@ -16,3 +16,8 @@ $ docker-compose up
 ```bash
 $ docker exec <container_name> python3 manage.py test
 ```
+
+### Design Decisions
+- I used Django and Django Rest Framework to build the service. Im more comfortable in using Django & DRF as it provides me with everything I need and is very well documented.
+- I used PostgreSQL DB for the database and stored the `configuration` inside a `JSONField` to keep things simple and to be able to store additional configuration for a robot if it'll be supported in the future.
+- I used docker to replicate the same dev environment using containers and to have the ability to deploy the app easily.
